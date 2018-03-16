@@ -5,9 +5,11 @@ const path = require('path')
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
+var favicon = require('serve-favicon');
 
-const MONGODB_URI = MONGODB_URI || 'mongodb://127.0.0.1/practiceDB';
-mongoose.connect(mongoDB);
+
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/practiceDB';
+mongoose.connect(MONGODB_URI);
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 
@@ -19,6 +21,8 @@ app.use(bodyParser.json())
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
