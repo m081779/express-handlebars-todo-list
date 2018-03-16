@@ -6,10 +6,10 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 
-var mongoDB = 'mongodb://127.0.0.1/practiceDB';
+const MONGODB_URI = MONGODB_URI || 'mongodb://127.0.0.1/practiceDB';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
