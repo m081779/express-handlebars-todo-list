@@ -34,7 +34,7 @@ app.use('/', index);
 app.use('/api', api);
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, function(){
   console.log('app listening on port', PORT)
 })
