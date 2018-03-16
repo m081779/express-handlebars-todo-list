@@ -1,6 +1,5 @@
 const Task = require('../models/task');
 
-
 module.exports = {
   findAll: function (req,res){
     Task
@@ -13,7 +12,7 @@ module.exports = {
     Task
     .create(req.body)
     .then(result => res.json(result))
-    .catch(err => console.log(err));
+    .catch(err => res.json(err));
   },
 
   findOne: function (req,res){
@@ -39,7 +38,7 @@ module.exports = {
 
   updateName: function (req,res){
     Task
-    .findOneAndUpdate({_id: req.body.id}, {task: req.body.task})
+    .findOneAndUpdate({_id: req.body._id}, {task: req.body.task})
     .then(result => res.json(result))
     .catch(err => res.json(err))
   }

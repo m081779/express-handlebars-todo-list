@@ -1,31 +1,27 @@
 //================================================
-//Functions
+//Main Page Functions
 //================================================
 
 //function that is called to submit task to the database
 //takes the event, the url for the ajax call, and an optional id
-function submitTask(e, url, id){
+function createTask(e, url){
   e.preventDefault()
 
   //creating task object
   let taskInput = $('#task');
   let task = {
-    task: taskInput.val().trim(),
+    task: taskInput.val().trim()
   };
 
-  //adding optional id property to task
-  if (typeof id !== 'undefined'){
-    task.id = id;
-  }
-  //clearing inputs
+  //clearing input
   taskInput.val('');
   $.ajax({
-    url: url,//url passed from arguments
+    url: '/api/create',
     type: 'POST',
     data: task,
     success: function (response){
       //reloading the page to reflect changes
-      window.location.href = '/';
+      window.location.href = '/';  
     },
     error: function (err){
       console.log(err);
@@ -47,41 +43,8 @@ function remove(id){
       error: function (err){
         console.log(err);
       }
-    })
+    });
   }
-}
-
-//functoin to remove completed tasks.  No confirmation for deletion
-function removeCompleted(id){
-    $.ajax({
-      url: 'api/task/'+id,
-      type: 'DELETE',
-      success: function (response){
-        location.reload();
-      },
-      error: function (err){
-        console.log(err);
-      }
-    })
-}
-
-//function to change the task title
-function edit(id){
-  let data = {
-    id: id,
-    task: $('#task').val().trim()
-  }
-  $.ajax({
-    url: '/api/update',
-    type: 'POST',
-    data: data,
-    success: function (response){
-      window.location.href = '/';
-    },
-    error: function (err){
-      console.log(err);
-    }
-  })
 }
 
 //function to change task from incomplete to complete
@@ -96,4 +59,51 @@ function complete(id){
       console.log(err);
     }
   });
+}
+
+//functoin to remove completed tasks.  No confirmation for deletion
+function removeCompleted(id){
+  $.ajax({
+    url: 'api/task/'+id,
+    type: 'DELETE',
+    success: function (response){
+      location.reload();
+    },
+    error: function (err){
+      console.log(err);
+    }
+  })
+}
+
+
+//================================================
+//Edit Page Functions
+//================================================
+
+
+//function that is called to edit the name of a task
+function editTask(e, id){
+  e.preventDefault()
+
+  //creating task object
+  let taskInput = $('#editTask');
+  let task = {
+    task: taskInput.val().trim(),
+    _id: id
+  };
+
+  //clearing inputs
+  taskInput.val('');
+  $.ajax({
+    url: '/api/update',
+    type: 'POST',
+    data: task,
+    success: function (response){
+      //redirecting back to the main page
+      window.location.href = '/';  
+    },
+    error: function (err){
+      console.log(err);
+    }
+  })
 }

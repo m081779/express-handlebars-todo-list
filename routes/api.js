@@ -7,7 +7,6 @@ router
 .put(taskController.complete)
 .delete(taskController.deleteOne)
 
-
 router.post('/create', taskController.create);
 
 router.post('/update', taskController.updateName);

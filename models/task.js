@@ -10,10 +10,9 @@ const taskSchema = new Schema({
 		default: false
 	},
 	addedAt: {
-    type: Date,
-    default: Date.now()
+		type: Date,
+		default: Date.now()
 	},
-
 });
 
 const Task = module.exports = mongoose.model('Task', taskSchema);
