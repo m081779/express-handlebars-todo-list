@@ -10,7 +10,7 @@ function createTask(e, url){
   let taskInput = $('#task'),
       input = taskInput.val().trim(),
       task;
-  
+
   if (input !== '') {
     //creating task object
     task = {
@@ -74,7 +74,7 @@ function removeCompleted(id){
       location.reload();
     },
     error: function (err){
-      console.log(err);
+      console.log(err)
     }
   })
 }
