@@ -6,33 +6,37 @@
 //takes the event, the url for the ajax call, and an optional id
 function createTask(e, url){
   e.preventDefault()
-
-  //creating task object
-  let taskInput = $('#task');
-  let task = {
-    task: taskInput.val().trim()
-  };
-
-  //clearing input
-  taskInput.val('');
-  $.ajax({
-    url: '/api/create',
-    type: 'POST',
-    data: task,
-    success: function (response){
-      //reloading the page to reflect changes
-      window.location.href = '/';  
-    },
-    error: function (err){
-      console.log(err);
-    }
-  })
+  
+  let taskInput = $('#task'),
+      input = taskInput.val().trim(),
+      task;
+  
+  if (input !== '') {
+    //creating task object
+    task = {
+      task: input
+    };
+    //clearing input
+    taskInput.val('');
+    $.ajax({
+      url: '/api/create',
+      type: 'POST',
+      data: task,
+      success: function (response){
+        //reloading the page to reflect changes
+        window.location.href = '/';  
+      },
+      error: function (err){
+        console.log(err);
+      }
+    });
+  }
 }
 
 //function to remvove uncompleted tasks.  Requires users to
 //confirm deletion
 function remove(id){
-  let remove = confirm('Are you sure you want to delete this item?')
+  let remove = confirm('Are you sure you want to delete it? You haven\'t even completed it yet!  No one likes a quitter...')
   if (remove){
     $.ajax({
       url: 'api/task/'+id,
@@ -85,25 +89,29 @@ function removeCompleted(id){
 function editTask(e, id){
   e.preventDefault()
 
-  //creating task object
-  let taskInput = $('#editTask');
-  let task = {
-    task: taskInput.val().trim(),
-    _id: id
-  };
+  let taskInput = $('#editTask'),
+      input = taskInput.val().trim(),
+      task;
 
-  //clearing inputs
-  taskInput.val('');
-  $.ajax({
-    url: '/api/update',
-    type: 'POST',
-    data: task,
-    success: function (response){
-      //redirecting back to the main page
-      window.location.href = '/';  
-    },
-    error: function (err){
-      console.log(err);
+  if (input !== '') {
+    //creating task object
+    task = {
+      task: input,
+      _id: id
     }
-  })
-}
+    //clearing inputs
+    taskInput.val('');
+    $.ajax({
+      url: '/api/update',
+      type: 'POST',
+      data: task,
+      success: function (response){
+        //redirecting back to the main page
+        window.location.href = '/';  
+      },
+      error: function (err){
+        console.log(err);
+      }
+    });
+  }
+} 
