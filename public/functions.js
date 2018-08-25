@@ -74,7 +74,7 @@ function removeCompleted(id){
       location.reload();
     },
     error: function (err){
-      console.log(err)
+      console.log(err);
     }
   })
 }
